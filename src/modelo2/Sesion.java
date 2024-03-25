@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Sesion
 {
+    Escenario EIC1;
+    Escenario EDC1;
+    Escenario ERC1;
+    Escenario EPC1;
+    
     private int id_sesion;
     private Date fecha;
     private int id_alumno;

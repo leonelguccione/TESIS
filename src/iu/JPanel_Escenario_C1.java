@@ -738,11 +738,12 @@ public class JPanel_Escenario_C1 extends javax.swing.JPanel
 
     public int[] getNaftaDay()
     {
-        int[] fila = new int[10];
+         int[] fila = new int[10];
         int index = 1;
         for (index = 1; index <= 10; index++)
         {
-            String valor_str = (String) this.tm_zombis.getValueAt(0, index);
+            String valor_str = (String) this.tm_combustibles.getValueAt(nafta_fila, index);
+            System.out.println("\n carbon fila: " + nafta_fila + " index:  " + index + ": " + valor_str);
             fila[index - 1] = new Integer(valor_str);
         }
         return fila;

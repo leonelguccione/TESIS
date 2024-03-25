@@ -72,11 +72,9 @@ public class Sistema
         }
         ArrayList<Evento_03_04_108> lista_Eventos_108 = bd.getEventosBySesionBytipoEvento_03_04_08(sesion_ultima.getId_sesion(), 108);
         ArrayList<Evento_03_04_108> lista_Eventos_04 = bd.getEventosBySesionBytipoEvento_03_04_08(sesion_ultima.getId_sesion(), 4);
-        
         int id_escenario_asignado = sesion_ultima.getEscenario_asignado();
-        Escenario escenario_asignado = bd.getEscenarioById(id_escenario_asignado); //ok
-        InfoItems recursos_asignados = escenario_asignado.getRecursos_infoItems(); //ok
-        Recursos_Sesion recursos_sesion = new Recursos_Sesion(lista_Eventos_108, lista_Eventos_04, recursos_asignados);
+        Escenario escenario_asignado = bd.getEscenarioById(id_escenario_asignado);
+        Recursos_Sesion recursos_sesion = new Recursos_Sesion(lista_Eventos_108, lista_Eventos_04, escenario_asignado);
         recomendacionSesionC1 = RecomendacionSesionC1.getInstance();
         //int escenario_recomendado = recomendacionSesionC1.getEscenario_recomendado(lista_Eventos_108, lista_Eventos_04);
         int escenario_recomendado = recomendacionSesionC1.getEscenario_recomendado(recursos_sesion);
@@ -85,8 +83,8 @@ public class Sistema
         sesion_ultima.setEscenario_recomendado(escenario_recomendado);
         sesion_ultima.setCalificacion_difusa(calificacion_difusa);
         Sesion sesion_nueva = new Sesion(new Date(), id_alumno, escenario_recomendado, "sin Calificar", false);
-        bd.actualizar_sesion(sesion_ultima);
-        bd.sesion_SaveNuevaSesion(sesion_nueva);
+       // bd.actualizar_sesion(sesion_ultima);
+        //bd.sesion_SaveNuevaSesion(sesion_nueva);
     }
 
     /*

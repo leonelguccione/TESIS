@@ -1,8 +1,6 @@
 package modelo2;
 
 import com.google.gson.Gson;
-
-import modelo.I_Info_Items;
 import modelo.InfoItems;
 
 public class Escenario
@@ -14,8 +12,6 @@ public class Escenario
     private String calificacion= "calificacion";
     private String regla="regla";
     private InfoItems recursos_infoItems;
-    
-
 
     public Escenario(int id_escenario, String tipo_escenario, String recursos_json, String descripcion, String calificacion, String regla)
     {
