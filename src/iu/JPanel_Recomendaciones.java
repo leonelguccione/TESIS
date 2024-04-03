@@ -136,7 +136,7 @@ public class JPanel_Recomendaciones extends javax.swing.JPanel
 
         jLabel3.setText("Nombre");
 
-        jLabel2.setText("Alumno elegido");
+        jLabel2.setText("Jugador:");
 
         jLabel4.setText("Apellido");
 
@@ -232,7 +232,7 @@ public class JPanel_Recomendaciones extends javax.swing.JPanel
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Alumnos:");
+        jLabel1.setText("Jugadores:");
 
         jL_alumnos.setModel(new javax.swing.AbstractListModel<String>()
         {

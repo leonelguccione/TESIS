@@ -41,6 +41,7 @@ public class JF_Recomendaciones extends javax.swing.JInternalFrame
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Gestión de Recomendaciones");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

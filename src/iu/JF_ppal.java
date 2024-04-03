@@ -41,8 +41,11 @@ public class JF_ppal extends javax.swing.JFrame
     private void initComponents()
     {
 
+        jLayeredPane2 = new javax.swing.JLayeredPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        imagen_presentacion = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        AlumnosMenu = new javax.swing.JMenu();
+        JugadoresMenu = new javax.swing.JMenu();
         altaAlumno = new javax.swing.JMenuItem();
         escenariosMenu = new javax.swing.JMenu();
         modificacionEscenario = new javax.swing.JMenuItem();
@@ -53,15 +56,57 @@ public class JF_ppal extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        AlumnosMenu.setMnemonic('e');
-        AlumnosMenu.setText("Alumnos");
+        imagen_presentacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagen_presentacion.setIcon(new javax.swing.ImageIcon("/home/leonel/DATOS/UNLP/000_TESIS_MAESTRIA/WORKSPACE-ADMINISTRADOR-NETBEANS/Administrador-SG/src/recursos/Presentacion.png")); // NOI18N
+        imagen_presentacion.setAlignmentY(0.0F);
+
+        jLayeredPane1.setLayer(imagen_presentacion, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(imagen_presentacion)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(imagen_presentacion)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
+        jLayeredPane2.setLayout(jLayeredPane2Layout);
+        jLayeredPane2Layout.setHorizontalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPane1)
+                .addContainerGap())
+        );
+        jLayeredPane2Layout.setVerticalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPane1)
+                .addContainerGap())
+        );
+
+        JugadoresMenu.setMnemonic('e');
+        JugadoresMenu.setText("Jugadores");
 
         altaAlumno.setMnemonic('t');
         altaAlumno.setText("Alta");
         altaAlumno.addMouseListener(formListener);
-        AlumnosMenu.add(altaAlumno);
+        JugadoresMenu.add(altaAlumno);
 
-        menuBar.add(AlumnosMenu);
+        menuBar.add(JugadoresMenu);
 
         escenariosMenu.setMnemonic('f');
         escenariosMenu.setText("Escenarios");
@@ -89,11 +134,11 @@ public class JF_ppal extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -151,6 +196,7 @@ public class JF_ppal extends javax.swing.JFrame
         System.out.println("alta de alumno mouse pressed");
         jF_Alumnos = new JF_Alumnos();
         add(jF_Alumnos);
+        imagen_presentacion.setVisible(false);
         jF_Alumnos.setVisible(true);
         jF_Alumnos.setSize(this.getSize());
     }//GEN-LAST:event_altaAlumnoMousePressed
@@ -159,6 +205,7 @@ public class JF_ppal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_recomendarMenuItemMousePressed
         jF_Recomendaciones = new JF_Recomendaciones();
         add(jF_Recomendaciones);
+        imagen_presentacion.setVisible(false);
         jF_Recomendaciones.setVisible(true);
         jF_Recomendaciones.setSize(this.getSize());
     }//GEN-LAST:event_recomendarMenuItemMousePressed
@@ -167,6 +214,7 @@ public class JF_ppal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_modificacionEscenarioMousePressed
         jF_Escenarios = new JF_Escenarios();
         add(jF_Escenarios);
+        imagen_presentacion.setVisible(false);
         jF_Escenarios.setVisible(true);
         jF_Escenarios.setSize(this.getSize());
     }//GEN-LAST:event_modificacionEscenarioMousePressed
@@ -278,9 +326,12 @@ public class JF_ppal extends javax.swing.JFrame
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu AlumnosMenu;
+    private javax.swing.JMenu JugadoresMenu;
     private javax.swing.JMenuItem altaAlumno;
     private javax.swing.JMenu escenariosMenu;
+    private javax.swing.JLabel imagen_presentacion;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem modificacionEscenario;
     private javax.swing.JMenu recomendacionesMenu;
