@@ -83,8 +83,8 @@ public class Sistema
         sesion_ultima.setEscenario_recomendado(escenario_recomendado);
         sesion_ultima.setCalificacion_difusa(calificacion_difusa);
         Sesion sesion_nueva = new Sesion(new Date(), id_alumno, escenario_recomendado, "sin Calificar", false);
-       // bd.actualizar_sesion(sesion_ultima);
-        //bd.sesion_SaveNuevaSesion(sesion_nueva);
+        bd.actualizar_sesion(sesion_ultima);
+        bd.sesion_SaveNuevaSesion(sesion_nueva);
     }
 
     /*

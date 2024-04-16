@@ -40,6 +40,7 @@ public class JF_Alumnos extends javax.swing.JInternalFrame
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Gestión de Jugadores");
         setAutoscrolls(true);
 
         pack();
