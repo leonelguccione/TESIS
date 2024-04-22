@@ -1,11 +1,8 @@
 package persistencia;
 
-
 import com.google.gson.Gson;
 
-
 import java.sql.*;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +22,6 @@ import modelo.InfoItems_alumno_sesion;
 
 import modelo2.Escenario;
 import modelo2.Sesion;
-
 
 public class BaseDeDatos
 {
@@ -80,7 +76,6 @@ public class BaseDeDatos
     }
 
     /////////////////// hacer un backup de los datos en JSON sobre un archivo.
-
     public String escenario_to_json(Escenario escenario)
     {
         Gson gson = new Gson();
@@ -88,9 +83,8 @@ public class BaseDeDatos
         return json;
     }
 
-
     //////////////EVENTOS
-
+    
     public void limpiar_eventos()
     {
         conectar();
@@ -107,9 +101,37 @@ public class BaseDeDatos
         {
             desconectar();
         }
-
     }
 
+    public void eventos_eliminar_eventos_By_id_alumno(int id_alumno)
+    {
+        conectar();
+        String consulta = "delete from eventos where id_sesion IN (select id_sesion from sesiones where id_alumno = ?)";
+        PreparedStatement pstmt;
+        try
+        {
+            pstmt = conexion.prepareStatement(consulta);
+            pstmt.setInt(1, id_alumno);
+            int filasAfectadas = pstmt.executeUpdate();
+            if (filasAfectadas > 0)
+            {
+                System.out.println("se borraron los eventos correctamente");
+            }
+            else
+            {
+                System.out.println("No se pudo borrar eventos");
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            desconectar();
+        }
+    }
+    
     public Iterator<Evento> getEventos()
     {
         String query = "SELECT * FROM eventos";
@@ -158,7 +180,9 @@ public class BaseDeDatos
         }
     }
 
-    /**Genera la lista de eventos de una determinada sesion
+    /**
+     * Genera la lista de eventos de una determinada sesion
+     *
      * @param id_sesion
      * @return
      */
@@ -199,7 +223,9 @@ public class BaseDeDatos
         }
     }
 
-    /**Elegir los eventos del id_alumno correspondientes a la última sesión
+    /**
+     * Elegir los eventos del id_alumno correspondientes a la última sesión
+     *
      * @param tipo_evento
      * @return
      */
@@ -246,7 +272,7 @@ public class BaseDeDatos
             return listaDeEventos;
         }
     }
-    
+
     public ArrayList<Evento_03_04_108> getEventosBySesionBytipoEvento_03_04_08(int id_sesion, int tipo_evento)
     {
         String consultaSQL = "SELECT * FROM eventos WHERE tipo_evento = ? AND id_sesion = ?";
@@ -256,11 +282,11 @@ public class BaseDeDatos
             conectar();
             PreparedStatement statement = conexion.prepareStatement(consultaSQL);
             statement.setInt(1, tipo_evento);
-            statement.setInt(2, id_sesion);      
+            statement.setInt(2, id_sesion);
             Evento_03_04_108 evento_03_04_108 = null;
             ResultSet rows = statement.executeQuery();
             int i = 0;
-            while (rows.next() && i<10)
+            while (rows.next() && i < 10)
             {
                 evento_03_04_108 = new Evento_03_04_108();
                 evento_03_04_108.setTipo_evento(rows.getInt("tipo_evento")); //getInt("tipo_evento"));
@@ -292,21 +318,22 @@ public class BaseDeDatos
         }
     }
 
-
-    /**Elegir los eventos del id_alumno correspondientes a la última sesión
+    /**
+     * Elegir los eventos del id_alumno correspondientes a la última sesión
+     *
      * @param id_sesion
      * @param id_alumno
      * @param tipo_evento
      * @return
      */
     public ArrayList<Evento> getEventos_By_idSesion_By_idAlumno_By_tipoEvento(int id_sesion, int id_alumno,
-                                                                              int tipo_evento) throws SQLException
+            int tipo_evento) throws SQLException
     {
-        String sql =
-            "SELECT * FROM eventos WHERE id_sesion = " + id_sesion + " AND id_alumno= " + id_alumno +
-            " AND tipo_evento = " + tipo_evento;
-        String consultaSQL =
-            "SELECT * FROM eventos WHERE id_alumno = ? AND tipo_evento = ? AND id_sesion = (SELECT MAX(id_sesion) FROM eventos WHERE id_alumno = ?)";
+        String sql
+                = "SELECT * FROM eventos WHERE id_sesion = " + id_sesion + " AND id_alumno= " + id_alumno
+                + " AND tipo_evento = " + tipo_evento;
+        String consultaSQL
+                = "SELECT * FROM eventos WHERE id_alumno = ? AND tipo_evento = ? AND id_sesion = (SELECT MAX(id_sesion) FROM eventos WHERE id_alumno = ?)";
         PreparedStatement statement = conexion.prepareStatement(consultaSQL);
         statement.setInt(1, id_alumno);
         statement.setInt(2, tipo_evento);
@@ -328,8 +355,6 @@ public class BaseDeDatos
         ArrayList<Evento> lista_eventos = getEventos_By_idSesion_By_idAlumno_By_tipoEvento(id_sesion, id_alumno, 3);
         return lista_eventos;
     }
-    
-    
 
     public void mostrarEventos_03() throws SQLException
     {
@@ -343,7 +368,9 @@ public class BaseDeDatos
         }
     }
 
-    /**Evento de tipo allStatus
+    /**
+     * Evento de tipo allStatus
+     *
      * @param id_sesion
      * @param tipo_evento
      * @return
@@ -353,10 +380,10 @@ public class BaseDeDatos
         ArrayList<Evento> eventos = getEventosBySesionBytipoEvento(id_sesion, tipo_evento);
         return eventos.get(0);
     }
-    
-    //// ALUMNOS
 
-    public void limpiar_alumnos()
+    //// ALUMNOS
+    
+     public void limpiar_alumnos()
     {
         conectar();
         try
@@ -367,6 +394,36 @@ public class BaseDeDatos
         }
         catch (SQLException e)
         {
+        }
+        finally
+        {
+            desconectar();
+        }
+    }
+     
+    public void alumnos_eliminar_alumno_By_id_alumno(int id_alumno)
+    {
+        conectar();
+        PreparedStatement pstmt;
+        String sql = "delete from alumnos where id_alumno = ?";
+        try
+        {
+            pstmt = conexion.prepareStatement(sql);
+            pstmt.setInt(1, id_alumno);
+            int filasAfectadas = pstmt.executeUpdate();
+            if (filasAfectadas > 0)
+            {
+                System.out.println("se borró el alumno correctamente");
+            }
+            else
+            {
+                System.out.println("No se pudo borrar alumno");
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+
         }
         finally
         {
@@ -396,13 +453,12 @@ public class BaseDeDatos
         return alumnos.iterator();
     }
 
-
     public InfoItems_alumno_sesion getInfoItems_from_tabla_ultima_fecha(int id_alumno) throws SQLException
     {
         InfoItems_alumno_sesion infoItems_alumno_sesion = new InfoItems_alumno_sesion();
-        String sql =
-            "SELECT * FROM infoitems WHERE id_alumno= " + id_alumno +
-            " AND fecha = (SELECT MAX(fecha) FROM eventos WHERE id_alumno = " + id_alumno + ")";
+        String sql
+                = "SELECT * FROM infoitems WHERE id_alumno= " + id_alumno
+                + " AND fecha = (SELECT MAX(fecha) FROM eventos WHERE id_alumno = " + id_alumno + ")";
 
         try
         {
@@ -483,8 +539,6 @@ public class BaseDeDatos
     }
 
     ///////////   ESCENARIOS
-
-
     public Iterator<Escenario> getEscenarios() throws SQLException
     {
         Escenario escenario;
@@ -546,7 +600,6 @@ public class BaseDeDatos
         return escenario;
     }
 
-
     public Escenario getEscenario_by_tipo(String tipo_escenario)
     {
         Escenario escenario = null;
@@ -583,16 +636,15 @@ public class BaseDeDatos
         }
     }
 
-
     public void actualizarEscenario(Escenario escenario)
     {
         conectar();
         try
         {
-            System.out.println("actualizando escenario " + escenario.getTipo_escenario() + "  " +
-                               escenario.getId_escenario());
-            String sql =
-                "UPDATE escenarios SET calificacion = ?, recursos = ?, descripcion = ?, regla = ?, tipo_escenario = ? WHERE id_escenario = ?";
+            System.out.println("actualizando escenario " + escenario.getTipo_escenario() + "  "
+                    + escenario.getId_escenario());
+            String sql
+                    = "UPDATE escenarios SET calificacion = ?, recursos = ?, descripcion = ?, regla = ?, tipo_escenario = ? WHERE id_escenario = ?";
             PreparedStatement pstmt = conexion.prepareStatement(sql);
             // Establecer los nuevos valores para la fila
             pstmt.setString(1, escenario.getCalificacion());
@@ -641,8 +693,8 @@ public class BaseDeDatos
         nuevoEscenario.setTipo_escenario("promueve");
         nuevoEscenario.setId_escenario(4);
 
-        String sql =
-            "INSERT INTO escenarios (calificacion, recursos, descripcion, regla, tipo_escenario) VALUES (?, ?, ?, ?, ?)";
+        String sql
+                = "INSERT INTO escenarios (calificacion, recursos, descripcion, regla, tipo_escenario) VALUES (?, ?, ?, ?, ?)";
         conectar();
 
         try (PreparedStatement pstmt = conexion.prepareStatement(sql))
@@ -677,7 +729,6 @@ public class BaseDeDatos
     }
 
     ////////// Sesion
-
     public void limpiar_sesiones()
     {
         conectar();
@@ -696,15 +747,45 @@ public class BaseDeDatos
         }
     }
 
+    public void sesiones_eliminar_sesiones_By_id_alumno(int id_alumno)
+    {
+        conectar();
+        PreparedStatement pstmt;
+        String sql = "delete from sesiones where id_alumno = ?";
+        try
+        {
+            pstmt = conexion.prepareStatement(sql);
+            pstmt.setInt(1, id_alumno);
+            int filasAfectadas = pstmt.executeUpdate();
+            if (filasAfectadas > 0)
+            {
+                System.out.println("se borraron las sesiones correctamente");
+            }
+            else
+            {
+                System.out.println("No se pudo borrar sesiones");
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+
+        }
+        finally
+        {
+            desconectar();
+        }
+    }
+
     public void sesion_SaveNuevaSesion(Sesion nuevaSesion)
     {
         conectar();
         PreparedStatement pstmt;
         //String sql = "INSERT INTO sesiones (fecha, id_alumno, escenario_asignado, escenario_recomendado, calificacion_difusa, jugado) VALUES (?, ?, ?, ?, ?, ?)";
-        String sql =
-            "INSERT INTO sesiones (id_alumno, escenario_asignado, escenario_recomendado, calificacion_difusa, jugado) VALUES (?, ?, ?, ?, ?)";
+        String sql
+                = "INSERT INTO sesiones (id_alumno, escenario_asignado, escenario_recomendado, calificacion_difusa, jugado) VALUES (?, ?, ?, ?, ?)";
 
-        try 
+        try
         {
             pstmt = conexion.prepareStatement(sql);
             //pstmt.setDate(1, new java.sql.Date(nuevaSesion.getFecha().getTime()));
@@ -811,8 +892,9 @@ public class BaseDeDatos
         }
     }
 
-
-    /**selecciona la última sesión jugada por el alumno.
+    /**
+     * selecciona la última sesión jugada por el alumno.
+     *
      * @param id_alumno
      * @return
      */
@@ -820,8 +902,8 @@ public class BaseDeDatos
     {
         conectar();
         Sesion sesion = null;
-        String sql =
-            "SELECT * FROM mydb.sesiones WHERE id_sesion IN (SELECT MAX(id_sesion) FROM mydb.sesiones WHERE (id_alumno = ?))";
+        String sql
+                = "SELECT * FROM mydb.sesiones WHERE id_sesion IN (SELECT MAX(id_sesion) FROM mydb.sesiones WHERE (id_alumno = ?))";
         try (PreparedStatement pstmt = conexion.prepareStatement(sql))
         {
             pstmt.setInt(1, id_alumno);
@@ -854,8 +936,8 @@ public class BaseDeDatos
         try
         {
             System.out.println("actualizando sesion ultima");
-            String sql =
-                "UPDATE sesiones SET fecha = ?, id_alumno = ?, escenario_asignado = ?, escenario_recomendado = ?, calificacion_difusa = ?, jugado = ? WHERE id_sesion = ?";
+            String sql
+                    = "UPDATE sesiones SET fecha = ?, id_alumno = ?, escenario_asignado = ?, escenario_recomendado = ?, calificacion_difusa = ?, jugado = ? WHERE id_sesion = ?";
             PreparedStatement pstmt = conexion.prepareStatement(sql);
             // Establecer los nuevos valores para la fila
             pstmt.setDate(1, new java.sql.Date(sesion.getFecha().getTime())); //fecha
@@ -865,7 +947,7 @@ public class BaseDeDatos
             pstmt.setString(5, sesion.getCalificacion_difusa()); //calificacion_difusa
             pstmt.setBoolean(6, sesion.isJugado()); //jugado
             pstmt.setInt(7, sesion.getId_sesion()); //id_sesion
-            
+
             int filasAfectadas = pstmt.executeUpdate();
             if (filasAfectadas > 0)
             {
@@ -898,16 +980,17 @@ public class BaseDeDatos
         desconectar();
     }
 
-    /**Restaura a la base de datos
-     * las sesiones backupeadas en json
-     * Debe usarse dentro de SalvarSesionesRecuperadas
-     * Registra tambien la fecha que tenía y el numero de sesion
+    /**
+     * Restaura a la base de datos las sesiones backupeadas en json Debe usarse
+     * dentro de SalvarSesionesRecuperadas Registra tambien la fecha que tenía y
+     * el numero de sesion
+     *
      * @param sesionRecuperada
      */
     public void salvarUnaSesionRecuperada(Sesion sesionRecuperada)
     {
-        String sql =
-            "INSERT INTO sesiones (id_sesion, fecha, id_alumno, escenario_asignado, escenario_recomendado, calificacion_difusa, jugado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql
+                = "INSERT INTO sesiones (id_sesion, fecha, id_alumno, escenario_asignado, escenario_recomendado, calificacion_difusa, jugado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conexion.prepareStatement(sql))
         {
@@ -931,13 +1014,16 @@ public class BaseDeDatos
                 System.out.println("No se pudo insertar la nueva fila en la tabla sesiones.");
             }
         }
-
         catch (SQLException e)
         {
             e.printStackTrace();
-
         }
     }
-
-
+    
+    public void alumnos_sesiones_eventos_borrar_By_idAlumno(int id_alumno)
+    {
+        eventos_eliminar_eventos_By_id_alumno(id_alumno);
+        sesiones_eliminar_sesiones_By_id_alumno(id_alumno);
+        alumnos_eliminar_alumno_By_id_alumno(id_alumno);
+    }
 }

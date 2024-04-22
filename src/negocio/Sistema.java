@@ -153,6 +153,11 @@ public class Sistema
         bd.limpiar_sesiones();
         bd.limpiar_alumnos();
     }
+    
+    public void alumnos_sesiones_eventos_borrar_By_idAlumno(int id_alumno)
+    {
+        bd.alumnos_sesiones_eventos_borrar_By_idAlumno(id_alumno);
+    }
 
     public void reiniciar()
     {
