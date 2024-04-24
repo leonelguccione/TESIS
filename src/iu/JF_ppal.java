@@ -5,6 +5,7 @@
 package iu;
 
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -17,20 +18,20 @@ import negocio.Sistema;
 public class JF_ppal extends javax.swing.JFrame
 {
 
+    private static final Logger logger = Logger.getLogger(JF_ppal.class.getName());
+
     JF_Alumnos jF_Alumnos;
     JF_Recomendaciones jF_Recomendaciones;
     JF_Escenarios jF_Escenarios;
     Sistema sistema;
-   
-    
+
     public JF_ppal()
     {
         initComponents();
         sistema = Sistema.getInstance();
-        
+
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -188,7 +189,7 @@ public class JF_ppal extends javax.swing.JFrame
 
     private void altaAlumnoMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_altaAlumnoMouseClicked
     {//GEN-HEADEREND:event_altaAlumnoMouseClicked
-       
+
     }//GEN-LAST:event_altaAlumnoMouseClicked
 
     private void altaAlumnoMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_altaAlumnoMousePressed
@@ -222,11 +223,19 @@ public class JF_ppal extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-
-    
     public static void main(String args[])
     {
         System.out.println("jF_ppal");
+
+        try
+        {
+            LogManager.getLogManager().readConfiguration(JF_ppal.class.getResourceAsStream("/logging.properties"));
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error al cargar la configuración de logging: " + e);
+        }
+
         // Obtener el logger para el paquete java.awt
         Logger awtLogger = Logger.getLogger("java.awt");
         // Obtener el logger para el paquete sun.awt
@@ -237,38 +246,32 @@ public class JF_ppal extends javax.swing.JFrame
         Logger internalLogger = Logger.getLogger("jdk.internal");
         // Obtener el logger para el paquete jdk.internal.event.EventHelper
         //Logger eventHelperLogger = Logger.getLogger("jdk.internal.event.EventHelper");
-        
-       // Logger eventHelperLoggerCertificate = Logger.getLogger("jdk.internal.event.EventHelper logX509CertificateEvent");
-        
 
+        // Logger eventHelperLoggerCertificate = Logger.getLogger("jdk.internal.event.EventHelper logX509CertificateEvent");
         // Establecer el nivel de registro a WARNING o SEVERE para ambos paquetes
-        awtLogger.setLevel(Level.WARNING); // o Level.SEVERE
-        sunAwtLogger.setLevel(Level.WARNING); // o Level.SEVERE
-        swingLogger.setLevel(Level.WARNING); // o Level.SEVERE
-        internalLogger.setLevel(Level.WARNING); // o Level.SEVERE
-       // eventHelperLogger.setLevel(Level.OFF); // o Level.SEVERE
-        
-     //   eventHelperLoggerCertificate.setLevel(Level.WARNING);
+        awtLogger.setLevel(Level.ALL); // o Level.SEVERE
+        sunAwtLogger.setLevel(Level.ALL); // o Level.SEVERE
+        swingLogger.setLevel(Level.ALL); // o Level.SEVERE
+        internalLogger.setLevel(Level.ALL); // o Level.SEVERE
+        // eventHelperLogger.setLevel(Level.OFF); // o Level.SEVERE
 
+        //   eventHelperLoggerCertificate.setLevel(Level.WARNING);
         // Desactivar el manejo de registros para la consola (si se desea)
         awtLogger.setUseParentHandlers(false);
         sunAwtLogger.setUseParentHandlers(false);
         swingLogger.setUseParentHandlers(false);
         internalLogger.setUseParentHandlers(false);
-       // eventHelperLogger.setUseParentHandlers(false);
-        
-       // eventHelperLoggerCertificate.setUseParentHandlers(false);
-        
-        
+        // eventHelperLogger.setUseParentHandlers(false);
 
+        // eventHelperLoggerCertificate.setUseParentHandlers(false);
         // Ejemplo de cómo registrar específicamente el método logX509CertificateEvent
         /*
-        if (eventHelperLogger.isLoggable(Level.WARNING)) {
-            eventHelperLogger.log(Level.WARNING, "Se ha invocado el método logX509CertificateEvent");
-        }
-        * */
-        
-        /*
+         * if (eventHelperLogger.isLoggable(Level.WARNING)) {
+         * eventHelperLogger.log(Level.WARNING, "Se ha invocado el método
+         * logX509CertificateEvent"); }
+        *
+         */
+ /*
          * Set the Nimbus look and feel
          */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -322,7 +325,6 @@ public class JF_ppal extends javax.swing.JFrame
 
         ///new JF_ppal().setVisible(true);
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -2,15 +2,12 @@ package iu;
 
 import excepciones.SesionNoJugadaException;
 import java.awt.BorderLayout;
-//import java.awt.Dimension;
-//import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import modelo.Alumno;
 import modelo2.Sesion;
 import negocio.Sistema;
