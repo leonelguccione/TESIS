@@ -16,7 +16,6 @@
                 <Property name="text" type="java.lang.String" value="Alta"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="altaAlumnoMouseClicked"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="altaAlumnoMousePressed"/>
               </Events>
             </MenuItem>

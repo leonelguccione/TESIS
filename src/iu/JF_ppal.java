@@ -152,10 +152,6 @@ public class JF_ppal extends javax.swing.JFrame
         FormListener() {}
         public void mouseClicked(java.awt.event.MouseEvent evt)
         {
-            if (evt.getSource() == altaAlumno)
-            {
-                JF_ppal.this.altaAlumnoMouseClicked(evt);
-            }
         }
 
         public void mouseEntered(java.awt.event.MouseEvent evt)
@@ -187,14 +183,8 @@ public class JF_ppal extends javax.swing.JFrame
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void altaAlumnoMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_altaAlumnoMouseClicked
-    {//GEN-HEADEREND:event_altaAlumnoMouseClicked
-
-    }//GEN-LAST:event_altaAlumnoMouseClicked
-
     private void altaAlumnoMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_altaAlumnoMousePressed
     {//GEN-HEADEREND:event_altaAlumnoMousePressed
-        System.out.println("alta de alumno mouse pressed");
         jF_Alumnos = new JF_Alumnos();
         add(jF_Alumnos);
         imagen_presentacion.setVisible(false);
@@ -230,13 +220,14 @@ public class JF_ppal extends javax.swing.JFrame
         try
         {
             LogManager.getLogManager().readConfiguration(JF_ppal.class.getResourceAsStream("/logging.properties"));
+            System.out.print("se ha cargado la configuración de logging.properties");
         }
         catch (Exception e)
         {
             System.err.println("Error al cargar la configuración de logging: " + e);
         }
-
-        // Obtener el logger para el paquete java.awt
+        
+         // Obtener el logger para el paquete java.awt
         Logger awtLogger = Logger.getLogger("java.awt");
         // Obtener el logger para el paquete sun.awt
         Logger sunAwtLogger = Logger.getLogger("sun.awt");
@@ -262,6 +253,7 @@ public class JF_ppal extends javax.swing.JFrame
         swingLogger.setUseParentHandlers(false);
         internalLogger.setUseParentHandlers(false);
         // eventHelperLogger.setUseParentHandlers(false);
+
 
         // eventHelperLoggerCertificate.setUseParentHandlers(false);
         // Ejemplo de cómo registrar específicamente el método logX509CertificateEvent

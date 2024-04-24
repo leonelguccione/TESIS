@@ -9,7 +9,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 import modelo.Alumno;
-import modelo2.Sesion;
 
 import negocio.Sistema;
 
